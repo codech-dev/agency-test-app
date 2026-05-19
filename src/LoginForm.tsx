@@ -33,7 +33,7 @@ export function LoginForm() {
     const resp = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email: email.toLowerCase(), password }),
     });
     const json = await resp.json();
     setResult(resp.ok ? `OK: ${json.message}` : `ERR: ${json.error ?? 'unknown'}`);
@@ -44,8 +44,10 @@ export function LoginForm() {
       <label style={labelStyle}>
         Email
         <input
-          type="text"
-          autoCapitalize="characters"
+          type="email"
+          autoCapitalize="none"
+          inputMode="email"
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={inputStyle}
